@@ -1,6 +1,6 @@
 # github-cr
 
-TODO: Write a description here
+A Github API wrapper for Crystal.
 
 ## Installation
 
@@ -36,4 +36,5 @@ TODO: Write development instructions here
 
 ## Contributors
 
-- [Arnav Borborah](https://github.com/your-github-user) - creator and maintainer
+- [Arnav Borborah](https://github.com/arnavb) - creator and maintainer
+
