@@ -1,0 +1,9 @@
+name: github-cr
+version: 0.1.0
+
+authors:
+  - Arnav Borborah <arnavborborah11@gmail.com>
+
+crystal: 0.27.2
+
+license: MIT
