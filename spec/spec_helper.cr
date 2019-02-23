@@ -1,2 +1,4 @@
 require "spec"
-require "../src/github-cr"
+require "../src/*"
+
+require "webmock"
