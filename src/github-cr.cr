@@ -1,5 +1,4 @@
-require "./api"
-require "./client"
+require "./github-cr/*"
 
 module Github
   VERSION = "0.1.0"
