@@ -43,12 +43,12 @@ module Github
       following:                 Int32,
       created_at:                String,
       updated_at:                String,
-      private_gists:             Int32,
-      total_private_repos:       Int32,
-      owned_private_repos:       Int32,
-      disk_usage:                Int32,
-      collaborators:             Int32,
-      two_factor_authentication: Bool,
+      private_gists:             Int32?,
+      total_private_repos:       Int32?,
+      owned_private_repos:       Int32?,
+      disk_usage:                Int32?,
+      collaborators:             Int32?,
+      two_factor_authentication: Bool?,
       plan:                      {type: UserPlan, nilable: true},
     })
   end
