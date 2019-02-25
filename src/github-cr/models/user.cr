@@ -34,7 +34,7 @@ module GithubCr
       company:                   String,
       blog:                      String,
       location:                  String,
-      email:                     String,
+      email:                     String?,
       hireable:                  Bool,
       bio:                       String,
       public_repos:              Int32,
