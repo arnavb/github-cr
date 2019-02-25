@@ -1,6 +1,6 @@
 require "./spec_helper"
 
-describe Github::Client do
+describe GithubCr::Client do
   describe "#new" do
     context "when user is authenticated" do
       it "gets the client user" do
@@ -9,9 +9,9 @@ describe Github::Client do
         WebMock.stub(:get, "https://api.github.com/user")
           .to_return(status: 200, body: json_body)
 
-        client = Github::Client.new("octocat", "")
+        client = GithubCr::Client.new("octocat", "")
 
-        client.user.should be_a Github::User
+        client.user.should be_a GithubCr::User
         client.user.to_json.should eq JSON.parse(json_body).to_json
       end
 
@@ -21,7 +21,7 @@ describe Github::Client do
         WebMock.stub(:get, "https://api.github.com/user")
           .to_return(status: 200, body: json_string)
 
-        client = Github::Client.new("octocat", "octocat_password")
+        client = GithubCr::Client.new("octocat", "octocat_password")
 
         client.user.login.should eq "octocat"
         client.user.hireable.should eq false
@@ -36,9 +36,9 @@ describe Github::Client do
           .with(headers: {"User-Agent" => "MyApplication/1.2.3"})
           .to_return(status: 200, body: json_body)
 
-        client = Github::Client.new("octocat", "octocat_password", user_agent = "MyApplication/1.2.3")
+        client = GithubCr::Client.new("octocat", "octocat_password", user_agent = "MyApplication/1.2.3")
 
-        client.user.class.should eq Github::User
+        client.user.class.should eq GithubCr::User
         client.user.to_json.should eq JSON.parse(json_body).to_json
       end
     end
@@ -48,8 +48,8 @@ describe Github::Client do
         WebMock.stub(:get, "https://api.github.com/user")
           .to_return(status: 401)
 
-        exception = expect_raises Github::HTTPError do
-          client = Github::Client.new("octocat", "blah_blah")
+        exception = expect_raises GithubCr::HTTPError do
+          client = GithubCr::Client.new("octocat", "blah_blah")
         end
 
         exception.status_code.should eq 401
@@ -62,8 +62,8 @@ describe Github::Client do
           .with(headers: {"User-Agent" => ""})
           .to_return(status: 401)
 
-        exception = expect_raises Github::HTTPError do
-          client = Github::Client.new("octocat", "octocat_password", user_agent = "")
+        exception = expect_raises GithubCr::HTTPError do
+          client = GithubCr::Client.new("octocat", "octocat_password", user_agent = "")
         end
 
         exception.status_code.should eq 401

@@ -1,6 +1,6 @@
 require "json"
 
-module Github
+module GithubCr
   class UserPlan
     JSON.mapping({
       name:          String,

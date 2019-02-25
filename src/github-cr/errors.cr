@@ -1,4 +1,4 @@
-module Github
+module GithubCr
   class HTTPError < Exception
     getter status_code
 
