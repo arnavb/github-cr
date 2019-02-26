@@ -6,8 +6,8 @@ require "json"
 
 module GithubCr
   class Client
-    def initialize(login : String, password : String, user_agent = "github-cr/#{GithubCr::VERSION}",
-                   timeout = 15, max_redirects = 5)
+    def initialize(login : String, password : String, @base_api_url = "https://api.github.com",
+                   user_agent = "github-cr/#{GithubCr::VERSION}", timeout = 15, max_redirects = 5)
       # Initialize Halite HTTP Client for all subsequent requests
       @http_client = Halite::Client.new do
         basic_auth login, password
@@ -16,21 +16,15 @@ module GithubCr
         timeout timeout
         follow max_redirects
       end
-
-      response = @http_client.get("#{GithubCr::BASE_API_URL}/user")
-
-      raise GithubCr::HTTPError.new(401, "The user was not authenticated!") if response.status_code == 401
-
-      @user = GithubCr::User.from_json(response.body)
     end
 
     def user(login : String? = nil)
-      if login.nil?
-        @user
-      else
-        response = @http_client.get("#{GithubCr::BASE_API_URL}/users/#{login}")
-        GithubCr::User.from_json(response.body)
-      end
+      response = if login.nil?
+                   @http_client.get("#{@base_api_url}/user")
+                 else
+                   @http_client.get("#{@base_api_url}/users/#{login}")
+                 end
+      GithubCr::User.new(response.body, @http_client, @base_api_url)
     end
   end
 end
