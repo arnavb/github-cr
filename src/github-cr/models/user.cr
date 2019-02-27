@@ -1,4 +1,4 @@
-require "halite"
+require "http/client"
 require "json"
 
 module GithubCr
@@ -61,8 +61,8 @@ module GithubCr
     # Some helper attributes so they can be accessed from object itself
     delegate login, name, email, bio, to: @raw_json
 
-    def initialize(json_data : String, @http_client : Halite::Client,
-                   @base_api_url : String)
+    def initialize(json_data : String, @http_client : HTTP::Client,
+                   @http_headers : HTTP::Headers)
       @raw_json = UserJSON.from_json(json_data)
     end
   end

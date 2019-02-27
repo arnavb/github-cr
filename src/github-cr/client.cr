@@ -1,30 +1,29 @@
-# require "http/client"
-require "halite"
+require "http/client"
 require "./models/user"
 require "./errors"
 require "json"
 
 module GithubCr
   class Client
-    def initialize(login : String, password : String, @base_api_url = "https://api.github.com",
+    def initialize(login : String, password : String, base_api_url = "https://api.github.com",
                    user_agent = "github-cr/#{GithubCr::VERSION}", timeout = 15, max_redirects = 5)
-      # Initialize Halite HTTP Client for all subsequent requests
-      @http_client = Halite::Client.new do
-        basic_auth login, password
-        headers accept: "application/vnd.github.v3+json"
-        headers user_agent: user_agent
-        timeout timeout
-        follow max_redirects
-      end
+      @http_headers = HTTP::Headers{
+        "Accept"     => "application/vnd.github.v3+json",
+        "User-Agent" => user_agent,
+      }
+      @http_client = HTTP::Client.new(URI.parse(base_api_url))
+      @http_client.connect_timeout = timeout
+
+      @http_client.basic_auth(login, password)
     end
 
     def user(login : String? = nil)
       response = if login.nil?
-                   @http_client.get("#{@base_api_url}/user")
+                   @http_client.get("/user", @http_headers)
                  else
-                   @http_client.get("#{@base_api_url}/users/#{login}")
+                   @http_client.get("/users/#{login}", @http_headers)
                  end
-      GithubCr::User.new(response.body, @http_client, @base_api_url)
+      GithubCr::User.new(response.body, @http_client, @http_headers)
     end
   end
 end
