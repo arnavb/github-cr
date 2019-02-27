@@ -1,6 +1,4 @@
 require "http/client"
-require "./models/user"
-require "./errors"
 require "json"
 
 module GithubCr
@@ -23,6 +21,7 @@ module GithubCr
                  else
                    @http_client.get("/users/#{login}", @http_headers)
                  end
+      GithubCr.handle_http_errors(response) unless response.success?
       GithubCr::User.new(response.body, @http_client, @http_headers)
     end
   end

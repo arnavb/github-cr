@@ -3,7 +3,7 @@ module GithubCr
     getter status_code
 
     def initialize(@status_code : Int32, message : String)
-      super(message)
+      super("#{status_code}: #{message}")
     end
   end
 end

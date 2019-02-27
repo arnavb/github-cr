@@ -65,5 +65,13 @@ module GithubCr
                    @http_headers : HTTP::Headers)
       @raw_json = UserJSON.from_json(json_data)
     end
+
+    def num_followers
+      @json_data.followers
+    end
+
+    def num_following
+      @json_data.following
+    end
   end
 end

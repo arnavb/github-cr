@@ -14,8 +14,10 @@ describe GithubCr::Client do
 
           client = GithubCr::Client.new("octocat", "octocat_password")
 
-          client.user.should be_a GithubCr::User
-          client.user.name.should eq "monalisa octocat"
+          client_user = client.user
+
+          client_user.should be_a GithubCr::User
+          client_user.name.should eq "monalisa octocat"
         end
       end
 
@@ -33,6 +35,41 @@ describe GithubCr::Client do
 
           octocat_user.should be_a GithubCr::User
           octocat_user.name.should eq "monalisa octocat"
+        end
+      end
+    end
+
+    context "when user is not authenticated" do
+      context "when login is not passed" do
+        context "when user agent string is invalid" do
+          it "raises GithubCr::HTTPError with 403" do
+            # WebMock.stub(:get, "https://api.github.com/user")
+            #   .with(headers: {"Accept"     => "application/vnd.github.v3+json",
+            #                   "User-Agent" => "github-cr/#{GithubCr::VERSION}"})
+            #   .to_return(status: 401, body: )
+
+            # client = GithubCr::Client.new("octocat", "octocat_password")
+
+            # expect_raises(GithubCr::HTTPError) do
+            #   client_user = client.user
+            # end
+
+            # # client_user.should be_a GithubCr::User
+            # # client_user.name.should eq "monalisa octocat"
+          end
+        end
+
+        it "raises a GithubCr::HTTPError with 401" do
+        end
+      end
+
+      context "when login is passed" do
+        context "when user agent string is invalid" do
+          it "raises GithubCr::HTTPError with 403" do
+          end
+        end
+
+        it "raises a GithubCr::HTTPError with 401" do
         end
       end
     end
