@@ -1,6 +1,6 @@
 # github-cr
 
-A Github API wrapper for Crystal.
+A Github API wrapper for Crystal. Currently a work in progress, so don't use it for anything outside experimentation. Documentation is yet to be written.
 
 ## Installation
 
@@ -9,7 +9,7 @@ A Github API wrapper for Crystal.
    ```yaml
    dependencies:
      github-cr:
-       github: your-github-user/github-cr
+       github: arnavb/github-cr
    ```
 
 2. Run `shards install`
