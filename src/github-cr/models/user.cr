@@ -67,11 +67,11 @@ module GithubCr
     end
 
     def num_followers
-      @json_data.followers
+      @raw_json.followers
     end
 
     def num_following
-      @json_data.following
+      @raw_json.following
     end
   end
 end
