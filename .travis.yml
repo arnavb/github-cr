@@ -1,1 +1,14 @@
 language: crystal
+
+crystal:
+  - latest
+  - nightly
+
+script:
+  - crystal spec --verbose
+
+branches:
+  only:
+    - master
+    # Tags
+    - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
