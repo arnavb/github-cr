@@ -1,5 +1,7 @@
 # github-cr
 
+[![Travis Build Status](https://travis-ci.org/arnavb/github-cr.svg?branch=master)](https://travis-ci.org/arnavb/github-cr)
+
 A Github API wrapper for Crystal. Currently a work in progress, so don't use it for anything outside experimentation. Documentation is yet to be written.
 
 ## Installation
