@@ -2,10 +2,10 @@ require "./spec_helper"
 require "http/client/response"
 
 describe GithubCr::HTTPError do
-  describe "#new" do
+  describe "#error_message" do
     context "when response contains message" do
-      it "contains the message" do
-        response = HTTP::Client::Response.new(404,  "{\"message\": \"Some message\"}")
+      it "contains the error message" do
+        response = HTTP::Client::Response.new(404, "{\"message\": \"Some message\"}")
 
         exception = GithubCr::HTTPError.new(response)
 
@@ -14,7 +14,7 @@ describe GithubCr::HTTPError do
     end
 
     context "when response doesn't contain message" do
-      it "contains a default message" do
+      it "contains a default error message" do
         response = HTTP::Client::Response.new(404)
 
         exception = GithubCr::HTTPError.new(response)
@@ -22,8 +22,10 @@ describe GithubCr::HTTPError do
         exception.error_message.should eq "An unknown HTTP error occurred!"
       end
     end
+  end
 
-    it "contains the status code in @status_code" do
+  describe "#status_code" do
+    it "contains the response's status code" do
       response = HTTP::Client::Response.new(404)
 
       exception = GithubCr::HTTPError.new(response)
