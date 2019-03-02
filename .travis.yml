@@ -2,7 +2,7 @@ language: crystal
 
 crystal:
   - latest
-  - nightly
+  # - nightly
 
 script:
   - crystal spec --verbose
