@@ -1,15 +1,10 @@
 require "http/client"
 require "json"
 
+require "./base_model"
+
 module GithubCr
-  class User
-    getter raw_json : Hash(String, JSON::Any)
-
-    def initialize(json_data : String, @http_client : HTTP::Client,
-                   @http_headers : HTTP::Headers)
-      @raw_json = JSON.parse(json_data).as_h
-    end
-
+  class User < GithubCr::BaseModel
     def login
       @raw_json["login"]
     end
@@ -19,12 +14,7 @@ module GithubCr
     end
 
     def email
-      result = raw_json["email"]?
-      if result.nil?
-        nil
-      else
-        result.as_s
-      end
+      nilable_key("email", &.as_s)
     end
 
     def bio
@@ -44,12 +34,7 @@ module GithubCr
     end
 
     def num_private_repos
-      result = raw_json["total_private_repos"]?
-      if result.nil?
-        nil
-      else
-        result.as_i
-      end
+      nilable_key("total_private_repos", &.as_i)
     end
 
     def num_repos
