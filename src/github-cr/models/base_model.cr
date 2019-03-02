@@ -5,8 +5,8 @@ module GithubCr
   class BaseModel
     getter raw_json : Hash(String, JSON::Any)
 
-    def initialize(json_data : String, @http_client : HTTP::Client,
-                   @http_headers : HTTP::Headers)
+    protected def initialize(json_data : String, @http_client : HTTP::Client,
+                             @http_headers : HTTP::Headers)
       @raw_json = JSON.parse(json_data).as_h
     end
 
