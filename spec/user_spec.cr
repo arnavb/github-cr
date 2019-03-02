@@ -18,12 +18,12 @@ describe GithubCr::User do
   describe "#new" do
     it "works with client user" do
       user = GithubCr::User.new(get_json("client_user.json"), mock_http, mock_headers)
-      user.raw_json.plan.should_not be_nil
+      user.raw_json.has_key?("plan").should be_true
     end
 
     it "works with other users" do
       user = GithubCr::User.new(get_json("other_user.json"), mock_http, mock_headers)
-      user.raw_json.plan.should be_nil
+      user.raw_json.has_key?("plan").should_not be_true
     end
   end
 
@@ -33,44 +33,56 @@ describe GithubCr::User do
 
       user = GithubCr::User.new(json_data, mock_http, mock_headers)
 
-      user.raw_json.to_json.should eq JSON.parse(json_data).to_json
-    end
-
-    it "allows access of JSON as attributes" do
-      user = GithubCr::User.new(get_json("client_user.json"), mock_http, mock_headers)
-
-      user.raw_json.login.should eq "octocat"
-      user.raw_json.plan.not_nil!.space.should eq 400
+      user.raw_json.should eq JSON.parse(json_data)
     end
   end
 
-  it "makes some helper attributes available at top level" do
-    user = GithubCr::User.new(get_json("client_user.json"), mock_http, mock_headers)
+  describe "#login" do
+    it "returns the user's login" do
+      user = GithubCr::User.new(get_json("client_user.json"), mock_http, mock_headers)
+      user.login.should eq user.raw_json["login"]
+    end
+  end
 
-    user.login.should eq user.raw_json.login
-    user.name.should eq user.raw_json.name
-    user.email.should eq user.raw_json.email
-    user.bio.should eq user.raw_json.bio
+  describe "#name" do
+    it "returns the user's name" do
+      user = GithubCr::User.new(get_json("client_user.json"), mock_http, mock_headers)
+      user.name.should eq user.raw_json["name"]
+    end
+  end
+
+  describe "#bio" do
+    it "returns the user's bio" do
+      user = GithubCr::User.new(get_json("client_user.json"), mock_http, mock_headers)
+      user.bio.should eq user.raw_json["bio"]
+    end
+  end
+
+  describe "#email" do
+    it "returns the user's email" do
+      user = GithubCr::User.new(get_json("client_user.json"), mock_http, mock_headers)
+      user.email.should eq user.raw_json["email"]
+    end
   end
 
   describe "#num_followers" do
     it "returns the number of followers" do
       user = GithubCr::User.new(get_json("client_user.json"), mock_http, mock_headers)
-      user.num_followers.should eq user.raw_json.followers
+      user.num_followers.should eq user.raw_json["followers"]
     end
   end
 
   describe "#num_followers" do
     it "returns the number of following" do
       user = GithubCr::User.new(get_json("client_user.json"), mock_http, mock_headers)
-      user.num_following.should eq user.raw_json.following
+      user.num_following.should eq user.raw_json["following"]
     end
   end
 
   describe "#num_public_repos" do
     it "returns the total number of public repositories" do
       user = GithubCr::User.new(get_json("other_user.json"), mock_http, mock_headers)
-      user.num_public_repos.should eq user.raw_json.public_repos
+      user.num_public_repos.should eq user.raw_json["public_repos"]
     end
   end
 
@@ -78,7 +90,7 @@ describe GithubCr::User do
     context "when user is the client" do
       it "returns the total number of private repositories" do
         user = GithubCr::User.new(get_json("client_user.json"), mock_http, mock_headers)
-        user.num_private_repos.should eq user.raw_json.total_private_repos.not_nil!
+        user.num_private_repos.should eq user.raw_json["total_private_repos"]
       end
     end
 
