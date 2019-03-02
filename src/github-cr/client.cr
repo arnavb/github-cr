@@ -24,5 +24,16 @@ module GithubCr
       GithubCr.handle_http_errors(response) unless response.success?
       GithubCr::User.new(response.body, @http_client, @http_headers)
     end
+
+    def repository(full_name : String)
+      repo_name_split = full_name.split("/")
+      raise ArgumentError.new("Repository name must be of format user/repo!") if repo_name_split.size != 2
+
+      owner, repo = repo_name_split[0], repo_name_split[1]
+
+      response = @http_client.get("/repos/#{owner}/#{repo}", @http_headers)
+      GithubCr.handle_http_errors(response) unless response.success?
+      GithubCr::Repository.new(response.body, @http_client, @http_headers)
+    end
   end
 end
