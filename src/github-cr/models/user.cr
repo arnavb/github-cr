@@ -73,5 +73,21 @@ module GithubCr
     def num_following
       @raw_json.following
     end
+
+    def num_repos
+      if num_private_repos.nil?
+        num_public_repos
+      else
+        num_public_repos + num_private_repos.not_nil!
+      end
+    end
+
+    def num_public_repos
+      @raw_json.public_repos
+    end
+
+    def num_private_repos
+      @raw_json.total_private_repos
+    end
   end
 end

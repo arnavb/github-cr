@@ -66,4 +66,43 @@ describe GithubCr::User do
       user.num_following.should eq user.raw_json.following
     end
   end
+
+  describe "#num_public_repos" do
+    it "returns the total number of public repositories" do
+      user = GithubCr::User.new(get_json("other_user.json"), mock_http, mock_headers)
+      user.num_public_repos.should eq user.raw_json.public_repos
+    end
+  end
+
+  describe "#num_private_repos" do
+    context "when user is the client" do
+      it "returns the total number of private repositories" do
+        user = GithubCr::User.new(get_json("client_user.json"), mock_http, mock_headers)
+        user.num_private_repos.should eq user.raw_json.total_private_repos.not_nil!
+      end
+    end
+
+    context "when user is not the client" do
+      it "returns nil" do
+        user = GithubCr::User.new(get_json("other_user.json"), mock_http, mock_headers)
+        user.num_private_repos.should be_nil
+      end
+    end
+  end
+
+  describe "#num_repos" do
+    context "when user is the client" do
+      it "returns the total number of public/private repositories" do
+        user = GithubCr::User.new(get_json("client_user.json"), mock_http, mock_headers)
+        user.num_repos.should eq user.num_public_repos + user.num_private_repos.not_nil!
+      end
+    end
+
+    context "when user is not the client" do
+      it "returns the total number of public repositories" do
+        user = GithubCr::User.new(get_json("other_user.json"), mock_http, mock_headers)
+        user.num_repos.should eq user.num_public_repos
+      end
+    end
+  end
 end
