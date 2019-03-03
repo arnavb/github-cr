@@ -38,7 +38,7 @@ describe GithubCr::Client do
     context "when user is not authenticated" do
       context "when login is not passed" do
         context "when user agent string is invalid" do
-          it "raises GithubCr::HTTPError with 403" do
+          it "raises GithubCr::ForbiddenError" do
             WebMock.stub(:get, "https://api.github.com/user")
               .with(headers: {"Accept"     => "application/vnd.github.v3+json",
                               "User-Agent" => "github-cr/#{GithubCr::VERSION}"})
@@ -52,7 +52,7 @@ describe GithubCr::Client do
           end
         end
 
-        it "raises a GithubCr::HTTPError with 401" do
+        it "raises a GithubCr::NotAuthenticatedError" do
           WebMock.stub(:get, "https://api.github.com/user")
             .with(headers: {"Accept"     => "application/vnd.github.v3+json",
                             "User-Agent" => "github-cr/#{GithubCr::VERSION}"})
@@ -68,7 +68,7 @@ describe GithubCr::Client do
 
       context "when login is passed" do
         context "when user agent string is invalid" do
-          it "raises GithubCr::HTTPError with 403" do
+          it "raises GithubCr::ForbiddenError" do
             WebMock.stub(:get, "https://api.github.com/users/octocat")
               .with(headers: {"Accept"     => "application/vnd.github.v3+json",
                               "User-Agent" => ""})
@@ -82,7 +82,7 @@ describe GithubCr::Client do
           end
         end
 
-        it "raises a GithubCr::HTTPError with 401" do
+        it "raises a GithubCr::NotAuthenticatedError" do
           WebMock.stub(:get, "https://api.github.com/users/octocat")
             .with(headers: {"Accept"     => "application/vnd.github.v3+json",
                             "User-Agent" => "github-cr/#{GithubCr::VERSION}"})

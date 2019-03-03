@@ -9,13 +9,5 @@ module GithubCr
                              @http_headers : HTTP::Headers)
       @raw_json = JSON.parse(json_data).as_h
     end
-
-    protected def nilable_key(key : String)
-      if @raw_json[key]?.nil?
-        nil
-      else
-        yield @raw_json[key]
-      end
-    end
   end
 end
