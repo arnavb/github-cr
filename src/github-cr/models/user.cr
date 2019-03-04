@@ -5,6 +5,11 @@ require "./base_model"
 
 module GithubCr
   class User < GithubCr::BaseModel
+    def initialize(json_data : String, http_client : HTTP::Client,
+                   http_headers : HTTP::Headers, @is_client_user : Bool)
+      super(json_data, http_client, http_headers)
+    end
+
     def login
       @raw_json["login"].as_s
     end

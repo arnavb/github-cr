@@ -22,7 +22,7 @@ module GithubCr
                    @http_client.get("/users/#{login}", @http_headers)
                  end
       GithubCr.handle_http_errors(response) unless response.success?
-      GithubCr::User.new(response.body, @http_client, @http_headers)
+      GithubCr::User.new(response.body, @http_client, @http_headers, login.nil?)
     end
 
     def repo(slug : String)
