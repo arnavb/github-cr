@@ -77,8 +77,14 @@ module GithubCr
       @raw_json = JSON.parse(response.body).as_h
     end
 
-    def all_repos
-      # TODO: Implement with pagination
+    def all_repos(**params)
+      response = if @is_client_user
+                   @http_client.get("/user/repos", @http_headers, body: params.to_json)
+                 else
+                   @http_client.get("/users/#{login}/repos", @http_headers, body: params.to_json)
+                 end
+      GithubCr.handle_http_errors(response) unless response.success?
+      response.body
     end
   end
 end
