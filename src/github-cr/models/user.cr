@@ -13,10 +13,6 @@ module GithubCr
       @raw_json["name"].as_s?
     end
 
-    def name=(new_name : String)
-      patch_user({"name" => new_name})
-    end
-
     def email
       @raw_json["email"].as_s?
     end
@@ -69,11 +65,15 @@ module GithubCr
       end
     end
 
-    def patch_user(new_body : Hash(String, String))
+    def patch(**new_body)
       response = @http_client.patch("/user", @http_headers,
         body: new_body.to_json)
       GithubCr.handle_http_errors(response) unless response.success?
       @raw_json = JSON.parse(response.body).as_h
+    end
+
+    def all_repos
+      # TODO: Implement with pagination
     end
   end
 end

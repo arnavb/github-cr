@@ -25,9 +25,9 @@ module GithubCr
       GithubCr::User.new(response.body, @http_client, @http_headers)
     end
 
-    def repository(full_name : String)
-      repo_name_split = full_name.split("/")
-      raise ArgumentError.new("Repository name must be of format user/repo!") if repo_name_split.size != 2
+    def repo(slug : String)
+      repo_name_split = slug.split("/")
+      raise ArgumentError.new("Repository slug must be of format user/repo!") if repo_name_split.size != 2
 
       owner, repo = repo_name_split[0], repo_name_split[1]
 

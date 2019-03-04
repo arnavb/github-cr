@@ -144,7 +144,7 @@ describe GithubCr::User do
     end
   end
 
-  describe "#patch_user" do
+  describe "#patch" do
     context "when user is the client" do
       it "allows patching of user attributes" do
         WebMock.stub(:patch, "https://api.github.com/user")
@@ -155,7 +155,7 @@ describe GithubCr::User do
         user = GithubCr::User.new(get_json("client_user.json"), mock_http, mock_headers)
         user.name.should eq "monalisa octocat"
 
-        user.name = "something else"
+        user.patch(name: "something else")
 
         user.name.should eq "something else"
         user.raw_json["name"].should eq "something else"
@@ -172,7 +172,7 @@ describe GithubCr::User do
         user.name.should eq "monalisa octocat"
 
         expect_raises(GithubCr::NotAuthenticatedError) do
-          user.name = "something else"
+          user.patch(name: "something else")
         end
 
         user.name.should eq "monalisa octocat"
