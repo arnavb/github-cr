@@ -6,7 +6,7 @@ require "./base_model"
 module GithubCr
   class User < GithubCr::BaseModel
     def initialize(json_data : String, http_client : HTTP::Client,
-                   http_headers : HTTP::Headers, @is_client_user : Bool)
+                   http_headers : HTTP::Headers, @is_client_user = false)
       super(json_data, http_client, http_headers)
     end
 
@@ -84,7 +84,7 @@ module GithubCr
                    @http_client.get("/users/#{login}/repos", @http_headers, body: params.to_json)
                  end
       GithubCr.handle_http_errors(response) unless response.success?
-      response.body
+      GithubCr::PaginatedResource(GithubCr::Repository).new(response, @http_client, @http_headers)
     end
   end
 end
