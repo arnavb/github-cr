@@ -4,6 +4,11 @@
 
 A Github API wrapper for Crystal. Currently a work in progress, so don't use it for anything outside experimentation. Documentation is yet to be written.
 
+## TODO:
+
+- [ ] Add tests for all classes and functions.
+- [ ] Add documentation for all parts of the public API.
+
 ## Installation
 
 1. Add the dependency to your `shard.yml`:
@@ -39,4 +44,3 @@ TODO: Write development instructions here
 ## Contributors
 
 - [Arnav Borborah](https://github.com/arnavb) - creator and maintainer
-
