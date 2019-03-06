@@ -25,6 +25,13 @@ module GithubCr
       GithubCr::User.new(response.body, @http_client, @http_headers, login.nil?)
     end
 
+    def repos(complete_request = false)
+      response = @http_client.get("/repositories", @http_headers)
+
+      GithubCr.handle_http_errors(response) unless response.success?
+      GithubCr::PaginatedResource(GithubCr::Repository).new(response, @http_client, @http_headers)
+    end
+
     def repo(slug : String)
       repo_name_split = slug.split("/")
       raise ArgumentError.new("Repository slug must be of format user/repo!") if repo_name_split.size != 2
