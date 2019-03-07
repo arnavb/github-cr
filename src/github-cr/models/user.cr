@@ -77,7 +77,7 @@ module GithubCr
       @raw_json = JSON.parse(response.body).as_h
     end
 
-    def all_repos(**params)
+    def repos(**params)
       response = if @is_client_user
                    @http_client.get("/user/repos", @http_headers, body: params.to_json)
                  else
