@@ -7,7 +7,8 @@ A Github API wrapper for Crystal. Currently a work in progress, so don't use it 
 ## TODO:
 
 - [x] Turn `GithubCr::PaginatedResource` and `GithubCr::Page` into iterators.
-  - [ ] Implement a way to create complete requests
+  - [ ] Implement a way to create complete requests.
+- [ ] Add OAuth and access token based authentication.
 - [ ] ~~Create a config system and pass a config object to all methods/classes.~~ Initialize parameters suffice.
 - [ ] Add tests for all classes and functions.
 - [ ] Add documentation for all parts of the public API.
