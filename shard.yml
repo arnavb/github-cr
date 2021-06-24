@@ -11,4 +11,4 @@ license: MIT
 development_dependencies:
   webmock:
     github: manastech/webmock.cr
-    version: ~> 0.10.0
+    version: "> 0.10.0"
