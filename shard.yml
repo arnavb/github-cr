@@ -4,11 +4,11 @@ version: 0.1.0
 authors:
   - Arnav Borborah <arnavborborah11@gmail.com>
 
-crystal: 0.27.2
+crystal: ">= 0.27.2"
 
 license: MIT
 
 development_dependencies:
   webmock:
     github: manastech/webmock.cr
-    version: ~> 0.10.0
+    version: "> 0.10.0"
